@@ -36,7 +36,7 @@ jobs:
     - name: Build IPA
       run: |
         cd provider_shopper/ios/
-        xcodebuild -workspace ios/Runner.xcworkspace \
+        xcodebuild -workspace provider_shopper/ios/Runner.xcworkspace \
                    -scheme Runner \
                    -configuration Release \
                    -archivePath $PWD/build/Runner.xcarchive \
