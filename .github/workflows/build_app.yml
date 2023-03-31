@@ -25,10 +25,7 @@ jobs:
           ls
           flutter clean 
           flutter pub get
-          rm -rf Podfile.lock
-          pod repo update
-          pod update FirebaseSessions
-          pod install
+          pod install --repo-update
     
 
     - name: Build iOS App
