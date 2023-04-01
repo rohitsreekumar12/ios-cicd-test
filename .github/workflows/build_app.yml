@@ -32,26 +32,33 @@ jobs:
       run: |
         cd provider_shopper/ios/
         flutter build ios --release --no-codesign 
+        cd ..
+        cd build/ios/iphoneos
+        mkdir ipa_app
+        cp -r Runner.app app_ipa
+        zip -r app.zip app_ipa/
+        mv app.zip app.ipa
+        
+      
+#     - name: Build IPA
+#       run: |
+#         cd provider_shopper/ios/
+#         pwd
+#         xcodebuild -workspace Runner.xcworkspace \
+#                    -scheme Runner \
+#                    -configuration Release \
+#                    -archivePath $PWD/build/Runner.xcarchive \
+#                    archive \
+#                    -quiet || exit
 
-    - name: Build IPA
-      run: |
-        cd provider_shopper/ios/
-        pwd
-        xcodebuild -workspace Runner.xcworkspace \
-                   -scheme Runner \
-                   -configuration Release \
-                   -archivePath $PWD/build/Runner.xcarchive \
-                   archive \
-                   -quiet || exit
-
-        xcodebuild -exportArchive \
-                   -archivePath $PWD/build/Runner.xcarchive \
-                   -exportOptionsPlist ExportOptions.plist \
-                   -exportPath $PWD/build/Runner.ipa \
-                   -quiet || exit
+#         xcodebuild -exportArchive \
+#                    -archivePath $PWD/build/Runner.xcarchive \
+#                    -exportOptionsPlist ExportOptions.plist \
+#                    -exportPath $PWD/build/Runner.ipa \
+#                    -quiet || exit
 
     - name: Upload IPA artifact
       uses: actions/upload-artifact@v2
       with:
         name: MyApp-IPA
-        path: ./build/Runner.ipa
+        path: ./provider_shopper/build/ios/iphoneos/app.ipa
